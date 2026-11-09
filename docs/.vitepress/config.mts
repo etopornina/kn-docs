@@ -2,19 +2,17 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   base: '/kn-docs/',
-  title: 'База знаний',
+  title: 'AIMor',
+  titleTemplate: ':title | База знаний',
   description: 'Инструкции и ответы на частые вопросы',
   cleanUrls: true,
+  appearance: 'force-dark',
 
   locales: {
     root: {
       label: 'Русский',
       lang: 'ru',
       themeConfig: {
-        nav: [
-          { text: 'Главная', link: '/' },
-          { text: 'Инструкции', link: '/dns-how-it-works' },
-        ],
         sidebar: [
           {
             text: 'Сеть и подключение',
@@ -34,13 +32,8 @@ export default defineConfig({
       label: 'English',
       lang: 'en',
       link: '/en/',
-      title: 'Knowledge Base',
-      description: 'Guides and answers to common questions',
+      title: 'AIMor',
       themeConfig: {
-        nav: [
-          { text: 'Home', link: '/en/' },
-          { text: 'Guides', link: '/en/dns-how-it-works' },
-        ],
         sidebar: [
           {
             text: 'Network & Connection',
