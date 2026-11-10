@@ -3,13 +3,18 @@ withDefaults(
   defineProps<{
     text: string
     position?: 'top' | 'bottom'
+    align?: 'center' | 'start' | 'end'
   }>(),
-  { position: 'top' }
+  { position: 'top', align: 'center' }
 )
 </script>
 
 <template>
-  <span class="kb-tooltip" :class="`kb-tooltip--${position}`" tabindex="0">
+  <span
+    class="kb-tooltip"
+    :class="[`kb-tooltip--${position}`, `kb-tooltip--align-${align}`]"
+    tabindex="0"
+  >
     <slot />
     <span class="kb-tooltip__bubble" role="tooltip" aria-hidden="true">{{ text }}</span>
   </span>
@@ -56,6 +61,22 @@ withDefaults(
   transform: translate(-50%, -4px);
 }
 
+.kb-tooltip--align-start .kb-tooltip__bubble {
+  left: 0;
+  transform: translateY(4px);
+}
+
+.kb-tooltip--align-end .kb-tooltip__bubble {
+  left: auto;
+  right: 0;
+  transform: translateY(4px);
+}
+
+.kb-tooltip--bottom.kb-tooltip--align-start .kb-tooltip__bubble,
+.kb-tooltip--bottom.kb-tooltip--align-end .kb-tooltip__bubble {
+  transform: translateY(-4px);
+}
+
 .kb-tooltip__bubble::before {
   content: '';
   position: absolute;
@@ -73,10 +94,28 @@ withDefaults(
   border-bottom-color: var(--vp-c-border);
 }
 
+.kb-tooltip--align-start .kb-tooltip__bubble::before {
+  left: 12px;
+  transform: none;
+}
+
+.kb-tooltip--align-end .kb-tooltip__bubble::before {
+  left: auto;
+  right: 12px;
+  transform: none;
+}
+
 .kb-tooltip:hover .kb-tooltip__bubble,
 .kb-tooltip:focus-visible .kb-tooltip__bubble {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, 0);
+}
+
+.kb-tooltip--align-start:hover .kb-tooltip__bubble,
+.kb-tooltip--align-start:focus-visible .kb-tooltip__bubble,
+.kb-tooltip--align-end:hover .kb-tooltip__bubble,
+.kb-tooltip--align-end:focus-visible .kb-tooltip__bubble {
+  transform: translateY(0);
 }
 </style>

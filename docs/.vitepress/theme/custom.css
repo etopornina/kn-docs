@@ -87,3 +87,14 @@
 .vp-doc th {
   text-align: center;
 }
+
+/* Outline (Содержание) — let long headings wrap instead of truncating */
+.VPDoc .outline-link,
+.VPLocalNavOutlineDropdown .outline-link {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.4;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}

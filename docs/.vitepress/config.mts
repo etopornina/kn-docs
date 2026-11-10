@@ -8,6 +8,8 @@ export default defineConfig({
   cleanUrls: true,
   appearance: 'force-dark',
 
+  // Custom block labels are global across locales (per-locale markdown config
+  // is not supported): use explicit titles like `::: info Note` in EN pages.
   markdown: {
     container: {
       tipLabel: 'Совет',
@@ -29,7 +31,14 @@ export default defineConfig({
           {
             text: 'Сеть и подключение',
             items: [
-              { text: 'DNS', link: '/' },
+              {
+                text: 'Система DNS',
+                link: '/',
+                items: [
+                  { text: 'Как узнать DNS-сервер', link: '/check-dns' },
+                  { text: 'Как сменить DNS-сервер', link: '/change-dns' },
+                ],
+              },
             ],
           },
         ],
@@ -50,7 +59,14 @@ export default defineConfig({
           {
             text: 'Network & Connection',
             items: [
-              { text: 'DNS', link: '/en/' },
+              {
+                text: 'The Domain Name System',
+                link: '/en/',
+                items: [
+                  { text: 'How to check your DNS server', link: '/en/check-dns' },
+                  { text: 'How to change your DNS server', link: '/en/change-dns' },
+                ],
+              },
             ],
           },
         ],
