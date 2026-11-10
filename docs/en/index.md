@@ -48,7 +48,7 @@ Common causes:
 - a DNS server is set manually in the OS settings and overrides the VPN app's settings;
 - Private DNS is enabled on Android — queries may bypass the app's resolver;
 - the system uses IPv6 while the tunnel is configured for IPv4 only;
-- your ISP transparently intercepts DNS queries on port 53.
+- your ISP transparently intercepts DNS queries on <Tooltip text="The standard port for unencrypted DNS queries">port 53</Tooltip>.
 
 You can check for leaks on services like `dnsleaktest.com` or `ipleak.net`: run the test with the VPN on. If the results show your ISP's servers or your real country, there's a leak.
 
@@ -61,7 +61,7 @@ Remove the manual DNS entry in your system settings, turn off Private DNS on And
 These tools solve different problems and are often confused:
 
 - **A different DNS server** (`1.1.1.1`, `8.8.8.8`, etc.) only changes who answers your queries. Your traffic isn't encrypted and your IP address doesn't change — you look the same to websites and your ISP.
-- **DoH/DoT** encrypt the DNS queries themselves, but not the rest of your traffic.
+- **<Tooltip text="DNS over HTTPS / DNS over TLS — protocols that encrypt DNS queries between your device and the resolver">DoH/DoT</Tooltip>** encrypt the DNS queries themselves, but not the rest of your traffic.
 - **Smart DNS** is a technology for accessing geo-restricted services: it reroutes some queries but doesn't change your IP or encrypt traffic.
 - **A VPN** encrypts all traffic, hides your IP, and handles DNS too — queries go through the tunnel to the service's resolver.
 
