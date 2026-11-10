@@ -82,3 +82,8 @@
   --vp-code-bg: #161B22;
   --vp-code-block-bg: #161B22;
 }
+
+/* Table headers — centered */
+.vp-doc th {
+  text-align: center;
+}
