@@ -17,7 +17,7 @@ export default defineConfig({
           {
             text: 'Сеть и подключение',
             items: [
-              { text: 'Что такое DNS и как работает', link: '/' },
+              { text: 'DNS и DNS-серверы', link: '/' },
             ],
           },
         ],
@@ -38,7 +38,7 @@ export default defineConfig({
           {
             text: 'Network & Connection',
             items: [
-              { text: 'What DNS is and how it works', link: '/en/' },
+              { text: 'DNS and DNS servers', link: '/en/' },
             ],
           },
         ],

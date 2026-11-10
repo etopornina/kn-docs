@@ -1,8 +1,8 @@
-# What DNS is and how it works
+# What DNS is and how it works with a VPN
 
 When you type a website address like `example.com`, your browser doesn't need the domain name — it needs the server's IP address, such as `93.184.216.34`. Converting names into addresses is the job of DNS (Domain Name System), the internet's distributed "phone book".
 
-## How it works
+## How DNS works
 
 A simplified lookup looks like this:
 
@@ -11,70 +11,68 @@ A simplified lookup looks like this:
 3. If the answer isn't in the resolver's cache, it asks the root servers, then the zone servers (`.com`, `.net`, etc.), then the domain's authoritative server.
 4. The IP address is returned to the browser and cached — so the site loads faster next time.
 
-## Why change your DNS server
+The chain looks like this:
 
-- **Speed.** Public resolvers often respond faster than your ISP's.
-- **Access.** If your ISP filters DNS queries, switching servers may help open a blocked site.
-- **Filtering.** Some servers block ads, malicious, or adult websites.
-- **Privacy.** Some servers don't keep query logs and support encryption (DoH/DoT).
+```text
+Browser → Resolver → Recursive server → Root → TLD (.com) → Authoritative
+   ▲                                                                    │
+   └──────────────────────── IP address ◀───────────────────────────────┘
+```
 
-::: tip If you use a VPN
-The app may set its own DNS — this protects you from DNS leaks, where queries are visible to your ISP outside the tunnel. Manual DNS configuration is usually not needed in this case.
+Who's who in this chain:
+
+- **Resolver (stub resolver)** — the DNS client in your OS. It can't look anything up itself: it takes the browser's query, checks the local cache, and passes it to the recursive server.
+- **Recursive server** — the "detective" of the chain: it walks the whole hierarchy until it finds an answer. Provided by your ISP, a public service (`1.1.1.1`, `8.8.8.8`), or a VPN app. Caches responses for all its clients.
+- **Root server** — the top of the hierarchy. It doesn't know any domain IPs, but it knows where each top-level zone's servers are: "for `.com`, ask over there".
+- **TLD server** — serves a specific top-level zone (`.com`, `.net`, `.org`). It knows which authoritative servers handle each domain in its zone.
+- **Authoritative server** — the final stop: it holds the domain's actual records (A, AAAA, MX, etc.) as configured by the domain owner. This is where the IP address comes from.
+
+By default, DNS queries are unencrypted. Even when a site loads over HTTPS, your ISP can see every domain you look up — effectively a list of every page you visit.
+
+## What happens to DNS when a VPN is on
+
+When a VPN is active, the app sets its own resolver, and DNS queries travel inside the encrypted tunnel along with the rest of your traffic. As a result:
+
+- your ISP only sees the connection to the VPN server, not the domains you request;
+- ISP-level DNS filtering stops working — sites blocked via DNS open normally;
+- answers come from the service's resolver in the country of the selected server, so sites detect your region correctly.
+
+That's why you usually don't need to change DNS manually in system settings while the VPN is on — the app handles it for you.
+
+## What a DNS leak is
+
+A DNS leak is when, despite an active VPN, queries still go to your ISP's resolver outside the tunnel. Your traffic is protected, but your ISP can still see which sites you visit.
+
+Common causes:
+
+- a DNS server is set manually in the OS settings and overrides the VPN app's settings;
+- Private DNS is enabled on Android — queries may bypass the app's resolver;
+- the system uses IPv6 while the tunnel is configured for IPv4 only;
+- your ISP transparently intercepts DNS queries on port 53.
+
+You can check for leaks on services like `dnsleaktest.com` or `ipleak.net`: run the test with the VPN on. If the results show your ISP's servers or your real country, there's a leak.
+
+::: tip What to do about a leak
+Remove the manual DNS entry in your system settings, turn off Private DNS on Android, and make sure DNS leak protection is enabled in your VPN app. If the leak persists, switch VPN servers or contact support.
 :::
 
-## Popular public DNS servers
+## Changing DNS ≠ VPN
 
-| Provider | IPv4 | IPv6 | Highlights |
-|---|---|---|---|
-| Cloudflare | `1.1.1.1`, `1.0.0.1` | `2606:4700:4700::1111` | Fast, no query logging, DoH/DoT |
-| Google | `8.8.8.8`, `8.8.4.4` | `2001:4860:4860::8888` | Reliable, wide network |
-| Quad9 | `9.9.9.9`, `149.112.112.112` | `2620:fe::fe` | Blocks malicious domains |
-| AdGuard | `94.140.14.14`, `94.140.15.15` | `2a10:50c0::ad1:ff` | Filters ads and trackers |
-| OpenDNS | `208.67.222.222`, `208.67.220.220` | `2620:119:35::35` | Family filters, flexible settings |
+These tools solve different problems and are often confused:
 
-## How to change your DNS server
+- **A different DNS server** (`1.1.1.1`, `8.8.8.8`, etc.) only changes who answers your queries. Your traffic isn't encrypted and your IP address doesn't change — you look the same to websites and your ISP.
+- **DoH/DoT** encrypt the DNS queries themselves, but not the rest of your traffic.
+- **Smart DNS** is a technology for accessing geo-restricted services: it reroutes some queries but doesn't change your IP or encrypt traffic.
+- **A VPN** encrypts all traffic, hides your IP, and handles DNS too — queries go through the tunnel to the service's resolver.
 
-### Windows
+Changing DNS manually makes sense when you're not using a VPN: for speed, ad filtering, or bypassing your ISP's DNS blocks. With a VPN on, manual configuration is more likely to hurt — it can conflict with the app's DNS and cause a leak.
 
-1. Open **Settings** → **Network & Internet** → **Properties** of your active connection.
-2. Click **Edit** next to "DNS server assignment".
-3. Select **Manual**, turn on IPv4, and enter the addresses from the table.
-4. Save the changes.
+## If a site won't open with the VPN on
 
-### macOS
-
-1. Open **System Settings** → **Network**.
-2. Select your active connection → **Details** → **DNS** tab.
-3. Click **+** and add the server addresses.
-4. Click **OK**, then **Apply**.
-
-### Android
-
-1. Open **Settings** → **Network & Internet** → **Private DNS**.
-2. Select "Private DNS provider hostname" and enter a hostname — for example, `one.one.one.one` for Cloudflare or `dns.adguard-dns.com` for AdGuard.
-3. Save. This section takes a hostname, not an IP address.
-
-### iOS
-
-1. Open **Settings** → **Wi-Fi**.
-2. Tap **(i)** next to your network → **Configure DNS**.
-3. Select **Manual**, remove the existing addresses, and add the new ones.
-4. Save. The setting applies only to the selected Wi-Fi network.
-
-### Router
-
-1. Open your router's admin panel — usually `192.168.0.1` or `192.168.1.1` in a browser.
-2. Find the **WAN**, **Internet**, or **DHCP** section.
-3. Enter the DNS addresses and save.
-
-Router settings apply to all devices on the network — no need to configure each one separately.
-
-## If a site won't open after changing DNS
-
-Flush the DNS cache — your system may have kept old responses:
+Sometimes the system or browser holds on to old DNS responses, and a site opens with an error or from the wrong region. Flush the cache:
 
 - **Windows:** run `ipconfig /flushdns` in the command prompt.
 - **macOS:** run `sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder` in the terminal.
 - **Android/iOS:** toggle airplane mode or restart the device.
 
-If the problem persists, switch back to automatic DNS in the settings — the site may be unavailable for another reason.
+If the problem persists, check the connection on `dnsleaktest.com` and try a different VPN server — the cause may not be DNS.

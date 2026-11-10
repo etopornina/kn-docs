@@ -71,6 +71,12 @@
   cursor: default;
 }
 
+/* Roomier word spacing for readability */
+.vp-doc p,
+.vp-doc li {
+  word-spacing: 0.15em;
+}
+
 /* Code blocks — surface tone */
 :root {
   --vp-code-bg: #161B22;
