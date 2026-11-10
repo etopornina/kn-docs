@@ -29,7 +29,7 @@ export default defineConfig({
           {
             text: 'Сеть и подключение',
             items: [
-              { text: 'DNS и DNS-серверы', link: '/' },
+              { text: 'DNS', link: '/' },
             ],
           },
         ],
@@ -50,7 +50,7 @@ export default defineConfig({
           {
             text: 'Network & Connection',
             items: [
-              { text: 'DNS and DNS servers', link: '/en/' },
+              { text: 'DNS', link: '/en/' },
             ],
           },
         ],
