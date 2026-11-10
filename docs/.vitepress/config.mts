@@ -8,6 +8,18 @@ export default defineConfig({
   cleanUrls: true,
   appearance: 'force-dark',
 
+  markdown: {
+    container: {
+      tipLabel: 'Совет',
+      infoLabel: 'Примечание',
+      warningLabel: 'Внимание',
+      dangerLabel: 'Осторожно',
+      detailsLabel: 'Подробности',
+      importantLabel: 'Важно',
+      cautionLabel: 'Осторожно',
+    },
+  },
+
   locales: {
     root: {
       label: 'Русский',
