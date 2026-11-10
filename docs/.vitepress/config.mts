@@ -63,7 +63,7 @@ export default defineConfig({
                 text: 'The Domain Name System',
                 link: '/en/',
                 items: [
-                  { text: 'How to check your DNS server', link: '/en/check-dns' },
+                  { text: 'How to find out your DNS server', link: '/en/check-dns' },
                   { text: 'How to change your DNS server', link: '/en/change-dns' },
                 ],
               },

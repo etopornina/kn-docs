@@ -5,32 +5,36 @@ title: How to find out which DNS server your device uses
 
 # How to find out which DNS server your device uses
 
-To find out which DNS server answers your device's queries, run the command for your operating system.
-
-## How to check the DNS server on Windows
-
-1. Open the command prompt: press <kbd>Win</kbd>+<kbd>R</kbd>, type `cmd`, and press <kbd>Enter</kbd>.
-1. Run `nslookup example.com`.
-1. Look for the `Server` and `Address` lines at the top of the output — they show the DNS server that answered the query.
-
-To see all DNS servers assigned to your network adapters, run `ipconfig /all` and look for the "DNS Servers" line.
-
-## How to check the DNS server on macOS
-
-1. Open Terminal: press <kbd>Cmd</kbd>+<kbd>Space</kbd>, type `terminal`, and press <kbd>Enter</kbd>.
-1. Run `scutil --dns`.
-1. Find the `nameserver[0]` line in the output — it shows your DNS server's address.
-
-## How to check the DNS server on Linux
-
-1. Open a terminal: press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> or find "Terminal" in your applications menu.
-1. Run `cat /etc/resolv.conf`.
-1. Find the `nameserver` line in the output — it shows the DNS server's address.
-
-If your system uses systemd-resolved, run `resolvectl status` and look for the `DNS Servers` line.
+To find out which DNS server answers your device's queries, follow the instructions for your operating system or router.
 
 ::: info Note
 
-If the commands show your router's address instead of a DNS server — for example, `192.168.0.1` or `192.168.1.1` — your queries are handled by the server set in the router's settings, which is usually your ISP's DNS server.
+If the commands in the instructions below show your router's address instead of a DNS server — for example, `192.168.0.1` or `192.168.1.1` — your queries are handled by the server set in the router's settings, which is usually your ISP's DNS server. To change it, see [How to change the DNS server on your device or router](/en/change-dns).
 
 :::
+
+## How to check the DNS server on Windows
+
+1. Open the command prompt by pressing <kbd>Win</kbd>+<kbd>R</kbd>.
+1. Type `cmd` and press <kbd>Enter</kbd>.
+1. Run `nslookup example.com`.
+1. Look for the `Server` and `Address` lines at the top of the output — they show the DNS server that answered the query.
+
+## How to check the DNS server on macOS
+
+1. Open Terminal by pressing <kbd>Cmd</kbd>+<kbd>Space</kbd>.
+1. Type `terminal` and press <kbd>Enter</kbd>.
+1. Run `scutil --dns`.
+1. Look for the `nameserver[0]` line in the output — it shows the DNS server that answered the query.
+
+## How to check the DNS server on Linux
+
+1. Open a terminal by pressing <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>.
+1. Run `cat /etc/resolv.conf`.
+1. Look for the `nameserver` line in the output — it shows the DNS server that answered the query.
+
+## How to check the DNS server on a router
+
+1. Open your router's web interface — usually at `192.168.0.1` or `192.168.1.1`.
+1. Find the internet connection settings section — usually called WAN, "Internet", or DHCP.
+1. Look for the DNS address fields — if they're set to "Obtain automatically", your ISP's DNS server is in use.

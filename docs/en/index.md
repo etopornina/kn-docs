@@ -16,7 +16,7 @@ The mapping is stored in DNS records — for example, an `A` record holds an IPv
 When you type a domain name into your browser:
 
 1. Your browser checks its own cache — if there's no match, the request goes to your operating system.
-2. The operating system checks its cache and the `hosts` file — if there's no match, the request goes to the recursive server.
+1. The operating system checks its cache and the `hosts` file — if there's no match, the request goes to the recursive server.
 
 ::: info Note
 
@@ -24,12 +24,12 @@ The recursive server is usually your ISP's DNS server or a public service — fo
 
 :::
 
-3. The recursive server checks its cache — if there's no match, it queries the DNS hierarchy servers in order: the root server, then the TLD server, then the domain's authoritative server. Learn more about [types of DNS servers](#dns-server-types).
-4. The resulting IP address is returned to the browser and cached at several levels — in the browser, in the operating system, and on the recursive server. The site will load faster next time.
+1. The recursive server checks its cache — if there's no match, it queries the DNS hierarchy servers in order: the root server, then the TLD server, then the domain's authoritative server. Learn more about [types of DNS servers](#dns-server-types).
+1. The resulting IP address is returned to the browser and cached at several levels — in the browser, in the operating system, and on the recursive server. The site will load faster next time.
 
 ## Types of DNS servers {#dns-server-types}
 
-DNS works thanks to DNS servers — machines that exchange queries over a common protocol to find domain IP addresses. DNS servers follow a strict hierarchy.
+DNS works thanks to DNS servers — they exchange queries over a common protocol to find domain IP addresses. DNS servers follow a strict hierarchy.
 
 | DNS server type | What it does |
 |---|---|
@@ -44,7 +44,7 @@ Your ISP provides its DNS server as part of your internet access. Your queries m
 
 Besides ISP DNS servers, independent companies offer public DNS servers as a standalone service — usually focusing on security and speed. Such servers typically support query encryption protocols — for example, DNS over HTTPS, where queries travel inside an encrypted HTTPS connection. Your ISP and attackers cannot read or tamper with such queries on the way to the server.
 
-To switch DNS servers, enter the chosen service's addresses in your device's or router's network settings — see [How to change your DNS server](/en/change-dns). Popular services:
+To switch DNS servers, enter the chosen service's addresses in your device's or router's network settings — see [How to change the DNS server on your device or router](/en/change-dns). Popular services:
 
 | Service | <Tooltip position="bottom" text="The classic IP version. An IPv4 address is four dot-separated numbers, e.g. 8.8.8.8">IPv4</Tooltip> addresses | <Tooltip position="bottom" text="The newer IP version with a larger address space. An IPv6 address is written as hexadecimal groups separated by colons, e.g. 2606:4700:4700::1111">IPv6</Tooltip> addresses | Features |
 |---------|----------------|----------------|----------|

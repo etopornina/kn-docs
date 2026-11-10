@@ -88,6 +88,20 @@
   text-align: center;
 }
 
+/* Keyboard keys — keycap style */
+.vp-doc kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  border: 1px solid var(--vp-c-border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--vp-c-bg-elv);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85em;
+  line-height: 1.6;
+  color: var(--vp-c-text-1);
+}
+
 /* Outline (Содержание) — let long headings wrap instead of truncating */
 .VPDoc .outline-link,
 .VPLocalNavOutlineDropdown .outline-link {
